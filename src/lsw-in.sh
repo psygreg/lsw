@@ -148,7 +148,7 @@ windocker () {
     fi
     mkdir -p $HOME/.config/winapps
 	cd $HOME/.config/winapps
-	wget -nc https://raw.githubusercontent.com/psygreg/linuxtoys-atom/refs/heads/main/lsw-atom/winapps/compose.yaml
+	wget -nc https://raw.githubusercontent.com/psygreg/lsw/refs/heads/main/src/compose.yaml
     # make necessary adjustments to compose file
     # Cap at 16GB
     if (( _cram > 16 )); then
