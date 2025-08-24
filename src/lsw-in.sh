@@ -139,7 +139,6 @@ lsw_selinux () {
 windocker () {
 
     # get compose file
-    cd $HOME
     if command -v getenforce &> /dev/null; then
         local selinux_status=$(getenforce)
         if [[ "$selinux_status" == "Enforcing" || "$selinux_status" == "Permissive" ]]; then
@@ -147,7 +146,9 @@ windocker () {
             return 0
         fi
     fi
-    wget -nc https://raw.githubusercontent.com/psygreg/lsw/refs/heads/main/src/compose.yaml
+    mkdir -p $HOME/.config/winapps
+	cd $HOME/.config/winapps
+	wget -nc https://raw.githubusercontent.com/psygreg/linuxtoys-atom/refs/heads/main/lsw-atom/winapps/compose.yaml
     # make necessary adjustments to compose file
     # Cap at 16GB
     if (( _cram > 16 )); then
@@ -224,6 +225,10 @@ winapp_config () {
     sleep 2
     docker compose --file ~/.config/winapps/compose.yaml start
     sleep 10
+    # symlink xfreerdp on fedora due to the command having a different name
+    if [ "$ID" == "fedora" ] || [[ "$ID_LIKE" == *fedora* ]]; then
+        sudo ln -s /usr/bin/xfreerdp /usr/bin/xfreerdp3
+    fi
     zenity --info --text "Now a test for RDP will be performed. It should show you the Windows 10 subsystem in a window, and it is safe to close once it logs in." --width 360 --height 300
     xfreerdp3 /u:"lsw" /p:"lsw" /v:127.0.0.1 /cert:tofu
     sleep 10
@@ -273,6 +278,9 @@ lsw_menu () {
             wget https://raw.githubusercontent.com/psygreg/lsw/refs/heads/main/src/menu/lsw-desktop.desktop
         fi
     else
+        if [ "$ID" == "fedora" ] || [[ "$ID_LIKE" == *fedora* ]]; then
+            sudo ln -s /usr/bin/xfreerdp /usr/bin/xfreerdp3
+        fi
         wget https://raw.githubusercontent.com/psygreg/lsw/refs/heads/main/src/menu/lsw-desktop-x11.desktop
     fi
     wget https://raw.githubusercontent.com/psygreg/lsw/refs/heads/main/src/lsw-desktop.png
