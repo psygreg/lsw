@@ -73,7 +73,6 @@ depcheck () {
     sudo usermod -aG docker $USER
     sudo systemctl enable --now docker
     sleep 2
-
 }
 
 # use port from LT Atom for SELinux compatibility
@@ -326,6 +325,7 @@ lswcfg () {
     # step 2 - winapps config
     if zenity --question --text "Is the Windows installation finished?" --width 360 --height 300; then
         lsw_menu
+        zeninf "Reboot to apply changes."
         exit 0
     else
         if zenity --question --text "Do you want to revert all changes? WARNING: This will ERASE all Docker Compose data!" --width 360 --height 300; then
