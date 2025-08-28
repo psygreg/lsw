@@ -63,11 +63,11 @@ depcheck () {
     elif [[ "$ID_LIKE" =~ (rhel|fedora) ]] || [[ "$ID" =~ (fedora) ]]; then
         sudo dnf -y install dnf-plugins-core
         sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-        local _packages=(docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin curl dialog freerdp git iproute libnotify nmap-ncat)
+        _packages=(docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin curl dialog freerdp git iproute libnotify nmap-ncat)
     elif [[ "$ID" =~ ^(arch|cachyos)$ ]] || [[ "$ID_LIKE" == *arch* ]] || [[ "$ID_LIKE" == *archlinux* ]]; then
-        local _packages=(docker docker-compose curl dialog freerdp git iproute2 libnotify gnu-netcat)
+        _packages=(docker docker-compose curl dialog freerdp git iproute2 libnotify gnu-netcat)
     elif [[ "$ID_LIKE" == *suse* ]]; then
-        local _packages=(docker docker-compose curl dialog freerdp git iproute2 libnotify-tools netcat-openbsd)
+        _packages=(docker docker-compose curl dialog freerdp git iproute2 libnotify-tools netcat-openbsd)
     fi
     _install_
     sudo usermod -aG docker $USER
@@ -79,9 +79,9 @@ depcheck () {
 lsw_selinux () {
 
     if [[ "$ID" =~ "suse" ]] || [[ "$ID_LIKE" =~ "suse" ]]; then
-        local _packages=(dialog netcat freerdp freerdp-sdl iproute libnotify)
+        _packages=(dialog netcat freerdp freerdp-sdl iproute libnotify)
     else
-        local _packages=(dialog netcat freerdp iproute libnotify)
+        _packages=(dialog netcat freerdp iproute libnotify)
     fi
 	_install_
     mkdir -p $HOME/.config/winapps
