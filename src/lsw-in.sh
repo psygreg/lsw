@@ -216,9 +216,11 @@ winapp_config () {
         _install_
     fi
     mkdir -p $HOME/.config/winapps
-    cd $HOME/.config/winapps
-    wget https://raw.githubusercontent.com/psygreg/lsw/refs/heads/main/src/winapps.conf
     cd $HOME
+    wget https://raw.githubusercontent.com/psygreg/lsw/refs/heads/main/src/winapps.conf
+    cp -f winapps.conf $HOME/.config/winapps/
+    sleep 1
+    rm winapps.conf
     sleep 2
     docker compose --file ~/.config/winapps/compose.yaml stop
     sleep 2
