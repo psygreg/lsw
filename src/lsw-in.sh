@@ -304,6 +304,7 @@ lsw_menu () {
 rmlsw () {
 
     if zenity --question --text "Do you want to revert all changes? WARNING: This will ERASE all Docker Compose data!" --width 360 --height 300; then
+        sudo_rq
         bash <(curl https://raw.githubusercontent.com/winapps-org/winapps/main/setup.sh)
         sudo docker compose --file ~/.config/winapps/compose.yaml stop
         sleep 2
@@ -360,7 +361,7 @@ if [ -e /dev/kvm ]; then
         case $CHOICE in
         "Install Standalone") sudo_rq && depcheck && windocker && lswcfg ;;
         "Install WinApps") sudo_rq && winapp_config ;;
-        "Uninstall") sudo_rq && rmlsw && break ;;
+        "Uninstall") rmlsw && break ;;
         "Cancel") break ;;
         *) echo "Invalid Option" ;;
         esac
